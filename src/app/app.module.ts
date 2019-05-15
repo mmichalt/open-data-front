@@ -7,16 +7,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { PeriodicTableComponent } from './periodic-table/periodic-table.component';
 import { RouterModule, Routes } from '@angular/router';
+import { SingleFinanceDataComponent } from './single-finance-data/single-finance-data.component';
 
 const appRoutes: Routes = [
   { path: 'periodic', component: PeriodicTableComponent },
-  { path: '', redirectTo: '/periodic', pathMatch: 'full' }
+  { path: 'sfd', component: SingleFinanceDataComponent },
+  { path: '', redirectTo: '/sfd', pathMatch: 'full' }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    PeriodicTableComponent
+    PeriodicTableComponent,
+    SingleFinanceDataComponent
   ],
   imports: [
     BrowserModule,
