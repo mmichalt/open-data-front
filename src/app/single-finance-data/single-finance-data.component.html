@@ -11,31 +11,31 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="index">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'sfd.No' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.index}} </td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="spendingTypeText">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.spendingTypeText}} </td>
+    <ng-container matColumnDef="sfd.spendingTypeText | translate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'sfd.Type' | translate}} </th>
+      <td mat-cell *matCellDef="let element"> {{'sfd.' + element.spendingTypeText | translate}} </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="amountOfMoney">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Money </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'sfd.Money' | translate}}, ₴ </th>
       <td mat-cell *matCellDef="let element"> {{element.amountOfMoney}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'sfd.Description' | translate}} </th>
       <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{'sfd.Date' | translate}} </th>
+      <td mat-cell *matCellDef="let element"> {{element.date | dateLocale: 'lll'}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

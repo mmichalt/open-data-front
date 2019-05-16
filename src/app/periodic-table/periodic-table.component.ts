@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {PeriodicTableService} from './periodic-table.service';
 import {PeriodicElement} from './periodicElement';
-import {element} from 'protractor';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-periodic-table',
@@ -16,7 +16,7 @@ export class PeriodicTableComponent implements OnInit {
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
   dataSource: MatTableDataSource<PeriodicElement>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private periodicTableService: PeriodicTableService) { }
+  constructor(private periodicTableService: PeriodicTableService, private translate: TranslateService) { }
 
   ngOnInit() {
     this.pageSizeOptions = [5, 10, 20, 50, 100, 200, 500];
@@ -31,5 +31,4 @@ export class PeriodicTableComponent implements OnInit {
       }
     );
   }
-
 }

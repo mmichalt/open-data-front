@@ -4,6 +4,7 @@ import {SingleFinanceDataService} from './single-finance-data.service';
 import {BudgetSpending, BudgetSpendingType} from './BudgetSpending';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import * as go from 'gojs/release/go';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-single-finance-data',
@@ -13,10 +14,10 @@ import * as go from 'gojs/release/go';
 export class SingleFinanceDataComponent implements OnInit, AfterViewInit {
 
   pageSizeOptions = [5, 10, 20, 50, 100, 200, 500];
-  displayedColumns = ['index', 'spendingTypeText', 'amountOfMoney', 'description', 'date'];
+  displayedColumns = ['index', 'sfd.spendingTypeText | translate', 'amountOfMoney', 'description', 'date'];
   dataSource = new MatTableDataSource(this.sfds.blobData.budgetSpendings);
 
-  constructor(private sfds: SingleFinanceDataService) { }
+  constructor(private sfds: SingleFinanceDataService, private translate: TranslateService) { }
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -49,7 +50,7 @@ export class SingleFinanceDataComponent implements OnInit, AfterViewInit {
                         $('ToolTip',
                           $(go.TextBlock, {margin: 4},
                             new go.Binding('text', '', (data) => {
-                              return data.type + ': ' + (data.sweep / 3.6).toFixed(2) + '%';
+                              return this.translate.instant("sfd." + data.type) + ': ' + (data.sweep / 3.6).toFixed(2) + '%';
                             }))
                         )
                     }

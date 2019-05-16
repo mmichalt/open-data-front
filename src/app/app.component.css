@@ -16,3 +16,7 @@ footer {
 router-outlet {
   flex: 1;
 }
+.menu-btn {
+  position: absolute;
+  right: 0;
+}
