@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FinanceData} from './FinanceData';
 import {SingleFinanceDataService} from './single-finance-data.service';
 import {BudgetSpending, BudgetSpendingType} from './BudgetSpending';
@@ -10,24 +10,37 @@ import * as go from 'gojs/release/go';
   templateUrl: './single-finance-data.component.html',
   styleUrls: ['./single-finance-data.component.css']
 })
-export class SingleFinanceDataComponent implements OnInit {
+export class SingleFinanceDataComponent implements OnInit, AfterViewInit {
 
-  dataSource: MatTableDataSource<BudgetSpending>;
-  pageSizeOptions: number[];
-  displayedColumns: string[];
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  pageSizeOptions = [5, 10, 20, 50, 100, 200, 500];
+  displayedColumns = ['No.', 'Type', 'Money', 'Description', 'Date'];
+  dataSource = new MatTableDataSource(this.sfds.blobData.budgetSpendings);
 
   constructor(private sfds: SingleFinanceDataService) { }
 
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
-    this.pageSizeOptions = [5, 10, 20, 50, 100, 200, 500];
-    this.displayedColumns = ['No.', 'Type', 'Money', 'Description', 'Date'];
-    this.dataSource = new MatTableDataSource(this.sfds.blobData.budgetSpendings);
+    this.createPieChart('goDiagram');
+    this.createPieChart('go2Diagram');
+  }
+
+  ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  getSpendingType(type: number): string {
+    return BudgetSpendingType[type];
+  }
+
+  indexOfElement(element: BudgetSpending): number {
+    return this.sfds.blobData.budgetSpendings.indexOf(element) + 1;
+  }
+
+  createPieChart(id) {
     const $ = go.GraphObject.make;
-    const myDiagram = $(go.Diagram, 'goDiagram', {
+    $(go.Diagram, id, {
         nodeTemplate:
           $(go.Node, 'Vertical',
             $(go.Panel,
@@ -44,8 +57,7 @@ export class SingleFinanceDataComponent implements OnInit {
                         $('ToolTip',
                           $(go.TextBlock, {margin: 4},
                             new go.Binding('text', '', (data) => {
-                              return data.color + ': ' + data.start +
-                                ' to ' + (data.start + data.sweep);
+                              return data.type + ': ' + (data.sweep / 3.6).toFixed(2) + '%';
                             }))
                         )
                     }
@@ -60,7 +72,7 @@ export class SingleFinanceDataComponent implements OnInit {
               [  // node data
                 {
                   key: 1,
-                  slices: this.makeSlices()
+                  slices: this.sfds.makeSlices()
                 }
               ]
           })
@@ -70,49 +82,12 @@ export class SingleFinanceDataComponent implements OnInit {
     function makeGeo(data) {
       // this is much more efficient than calling go.GraphObject.make:
       return new go.Geometry()
-        .add(new go.PathFigure(100, 100)  // start point
+        .add(new go.PathFigure(200, 200)  // start point
           .add(new go.PathSegment(go.PathSegment.Arc,
             data.start, data.sweep,  // angles
-            100, 100,  // center
-            100, 100)  // radius
+            200, 200,  // center
+            200, 200)  // radius
             .close()));
     }
-
-
-
-    console.log(this.sfds.blobData.overallSpendings - this.sfds.blobData.Overall);
-  }
-
-  getSpendingType(type: number): string {
-    return BudgetSpendingType[type];
-  }
-
-  indexOfElement(element: BudgetSpending): number {
-    return this.sfds.blobData.budgetSpendings.indexOf(element) + 1;
-  }
-
-  makeSlices(): any[] {
-    const slices = [];
-    this.sfds.blobData.budgetSpendings.filter((spend, index) => {
-      const obj = {
-        start: 0,
-        sweep: 0,
-        color: go.Brush.randomColor(0, 255)
-      };
-      if (index) {
-        obj.start = slices[index - 1].sweep + slices[index - 1].start;
-        obj.sweep = Math.floor(360 / this.sfds.blobData.Overall * spend.amountOfMoney);
-      } else {
-        obj.sweep = Math.floor(360 / this.sfds.blobData.Overall * spend.amountOfMoney);
-      }
-      slices.push(obj);
-    });
-    slices.push({
-      start: slices[slices.length - 1].start + slices[slices.length - 1].sweep,
-      sweep: 360 - slices[slices.length - 1].start - slices[slices.length - 1].sweep,
-      color: go.Brush.randomColor(0, 255)
-    });
-    console.log(slices);
-    return slices;
   }
 }

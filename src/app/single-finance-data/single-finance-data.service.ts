@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {FinanceData} from './FinanceData';
-import {BudgetSpending} from './BudgetSpending';
+import {BudgetSpending, BudgetSpendingType} from './BudgetSpending';
+import * as go from 'gojs';
+import {Colors} from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class SingleFinanceDataService {
     const arr = [];
     for (let i = 0; i < 10; ++i) {
       const money = Math.floor(Math.random() * Math.floor(1000000));
-      const type = Math.floor(Math.random() * Math.floor(10));
+      const type = Math.floor(Math.random() * Math.floor(9));
       const ddate = new Date();
       arr.push({
         spendingType: type,
@@ -21,6 +23,43 @@ export class SingleFinanceDataService {
       });
     }
     return arr;
+  }
+
+  makeSlices(): any[] {
+    const slices = [];
+    const groupedSpendings = Object.values(BudgetSpendingType).filter(value => !isNaN(value))
+      .map((type) => {
+        const moneySpent = this.blobData.budgetSpendings.filter((spend) => spend.spendingType === type).length === 0 ? 0 :
+          this.blobData.budgetSpendings.filter((spend) => spend.spendingType === type)
+            .map(s => s.amountOfMoney)
+            .reduce((a, b) => a + b);
+        return {
+          spendingType: BudgetSpendingType[type],
+          sum: moneySpent
+        };
+      });
+    groupedSpendings.filter((spend, index) => {
+      const obj = {
+        start: 0,
+        sweep: 0,
+        color: Colors[BudgetSpendingType[spend.spendingType] * 3],
+        type: spend.spendingType
+      };
+      if (index) {
+        obj.start = slices[index - 1].sweep + slices[index - 1].start;
+        obj.sweep = Math.floor(360 / this.blobData.Overall * spend.sum);
+      } else {
+        obj.sweep = Math.floor(360 / this.blobData.Overall * spend.sum);
+      }
+      slices.push(obj);
+    });
+    slices.push({
+      start: slices[slices.length - 1].start + slices[slices.length - 1].sweep,
+      sweep: 360 - slices[slices.length - 1].start - slices[slices.length - 1].sweep,
+      color: 'maroon',
+      type: 'MONEY_LEFT'
+    });
+    return slices;
   }
 
   constructor() {
