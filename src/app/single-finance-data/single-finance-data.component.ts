@@ -13,7 +13,7 @@ import * as go from 'gojs/release/go';
 export class SingleFinanceDataComponent implements OnInit, AfterViewInit {
 
   pageSizeOptions = [5, 10, 20, 50, 100, 200, 500];
-  displayedColumns = ['No.', 'Type', 'Money', 'Description', 'Date'];
+  displayedColumns = ['index', 'spendingTypeText', 'amountOfMoney', 'description', 'date'];
   dataSource = new MatTableDataSource(this.sfds.blobData.budgetSpendings);
 
   constructor(private sfds: SingleFinanceDataService) { }
@@ -28,14 +28,6 @@ export class SingleFinanceDataComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-  }
-
-  getSpendingType(type: number): string {
-    return BudgetSpendingType[type];
-  }
-
-  indexOfElement(element: BudgetSpending): number {
-    return this.sfds.blobData.budgetSpendings.indexOf(element) + 1;
   }
 
   createPieChart(id) {
