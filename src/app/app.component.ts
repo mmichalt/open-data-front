@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {of} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,11 @@ import {filter, map} from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor() {
+  constructor(private translate: TranslateService) {
+    translate.setDefaultLang('uk');
+  }
+  setLanguage = (lang) => {
+    this.translate.use(lang);
   }
 }
 

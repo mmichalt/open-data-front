@@ -1,7 +1,14 @@
 <header>
   <mat-toolbar>
-    <mat-basic-chip disableRipple  routerLink="/periodic" routerLinkActive="active">Periodic</mat-basic-chip>
-    <mat-basic-chip disableRipple  routerLink="/sfd" routerLinkActive="active">Single Finance Data Page</mat-basic-chip>
+    <mat-basic-chip disableRipple  routerLink="/periodic" routerLinkActive="active">{{'menu.Periodic' | translate}}</mat-basic-chip>
+    <mat-basic-chip disableRipple  routerLink="/sfd" routerLinkActive="active">{{'menu.SFDP' | translate}}</mat-basic-chip>
+    <mat-menu #appMenu="matMenu">
+      <mat-basic-chip disableRipple mat-menu-item (click)="setLanguage('en')">{{'menu.EN' | translate}}</mat-basic-chip>
+      <mat-basic-chip disableRipple mat-menu-item (click)="setLanguage('uk')">{{'menu.UA' | translate}}</mat-basic-chip>
+    </mat-menu>
+    <mat-basic-chip class="menu-btn" disableRipple [matMenuTriggerFor]="appMenu">
+      {{'menu.LANG' | translate}}
+    </mat-basic-chip>
   </mat-toolbar>
 </header>
 <router-outlet></router-outlet>
