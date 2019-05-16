@@ -19,7 +19,9 @@ export class SingleFinanceDataService {
         spendingType: type,
         date: ddate,
         amountOfMoney: money,
-        description: ''
+        description: '',
+        index: i + 1,
+        spendingTypeText: BudgetSpendingType[type]
       });
     }
     return arr;

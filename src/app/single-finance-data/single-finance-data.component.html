@@ -10,30 +10,30 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <!-- Position Column -->
-    <ng-container matColumnDef="No.">
+    <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-      <td mat-cell *matCellDef="let element"> {{indexOfElement(element)}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.index}} </td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="Type">
+    <ng-container matColumnDef="spendingTypeText">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-      <td mat-cell *matCellDef="let element"> {{getSpendingType(element.spendingType)}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.spendingTypeText}} </td>
     </ng-container>
 
     <!-- Weight Column -->
-    <ng-container matColumnDef="Money">
+    <ng-container matColumnDef="amountOfMoney">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Money </th>
       <td mat-cell *matCellDef="let element"> {{element.amountOfMoney}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
-    <ng-container matColumnDef="Description">
+    <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
       <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="Date">
+    <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
       <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
     </ng-container>
