@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+import {MatTableModule, MatPaginatorModule, MatSortModule, MatMenuModule, MatToolbarModule, MatChipsModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { PeriodicTableComponent } from './periodic-table/periodic-table.component';
@@ -30,7 +30,10 @@ const appRoutes: Routes = [
     MatSortModule,
     RouterModule.forRoot(
       appRoutes
-    )
+    ),
+    MatMenuModule,
+    MatToolbarModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
