@@ -70,11 +70,11 @@ export class SingleFinanceDataComponent implements OnInit {
     function makeGeo(data) {
       // this is much more efficient than calling go.GraphObject.make:
       return new go.Geometry()
-        .add(new go.PathFigure(50, 50)  // start point
+        .add(new go.PathFigure(100, 100)  // start point
           .add(new go.PathSegment(go.PathSegment.Arc,
             data.start, data.sweep,  // angles
-            50, 50,  // center
-            50, 50)  // radius
+            100, 100,  // center
+            100, 100)  // radius
             .close()));
     }
 
