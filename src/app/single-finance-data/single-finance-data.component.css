@@ -1,6 +1,13 @@
 table {
   width: 100%;
 }
-#goDiagram {
-  width:400px; height:300px; background-color: #DAE4E4; margin-bottom: 200px;
+.diagrams-div {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 100px;
+}
+#goDiagram, #go2Diagram {
+  width:500px;
+  height:500px;
+  background-color: #fff;
 }
