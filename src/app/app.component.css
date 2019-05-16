@@ -1,0 +1,18 @@
+mat-basic-chip {
+  margin: 15px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #e7e7e7;
+}
+
+mat-basic-chip:hover {
+  background-color: #d9d9d9;
+  cursor: pointer;
+}
+footer {
+  width: 100%;
+}
+
+router-outlet {
+  flex: 1;
+}
