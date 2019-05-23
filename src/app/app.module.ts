@@ -11,10 +11,12 @@ import { SingleFinanceDataComponent } from './single-finance-data/single-finance
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {DateLocaleFilter} from './dateLocaleFilter';
+import { HistoricDataPageComponent } from './historicdatapage/historicdatapage.component';
 
 const appRoutes: Routes = [
   { path: 'periodic', component: PeriodicTableComponent },
   { path: 'sfd', component: SingleFinanceDataComponent },
+  { path: 'hist', component: HistoricDataPageComponent },
   { path: '', redirectTo: '/sfd', pathMatch: 'full' }
 ];
 
@@ -23,7 +25,8 @@ const appRoutes: Routes = [
     AppComponent,
     PeriodicTableComponent,
     SingleFinanceDataComponent,
-    DateLocaleFilter
+    DateLocaleFilter,
+    HistoricDataPageComponent
   ],
   imports: [
     BrowserModule,
