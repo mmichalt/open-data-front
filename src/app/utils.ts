@@ -1,4 +1,4 @@
-import {go} from 'gojs/release/go-module';
+import * as go from 'gojs';
 
 export enum Colors {
   '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
@@ -23,19 +23,21 @@ export class GOJS {
     const itemTempl =
       $(go.Panel, 'TableColumn',
         $(go.Shape,
-          { row: 0, alignment: go.Spot.Bottom, click: (e, obj) => {
-            router.navigate([path]);
-          } },
-          { fill: 'slateblue', stroke: null, width: 40 },
+          {
+            row: 0, alignment: go.Spot.Bottom, click: (e, obj) => {
+              router.navigate([path]);
+            }
+          },
+          {fill: 'slateblue', stroke: null, width: 40},
           new go.Binding('height', 'val'),
           new go.Binding('fill', 'color')),
         $(go.TextBlock,
-          { row: 1 },
+          {row: 1},
           new go.Binding('text')),
         {
           toolTip:
             $('ToolTip',
-              $(go.TextBlock, { margin: 4 },
+              $(go.TextBlock, {margin: 4},
                 new go.Binding('text', 'tooltipValue'))
             )
         }
@@ -44,13 +46,13 @@ export class GOJS {
     myDiagram.nodeTemplate =
       $(go.Node, 'Auto',
         $(go.Shape,
-          { fill: 'white' }),
+          {fill: 'white'}),
         $(go.Panel, 'Vertical',
           $(go.Panel, 'Table',
-            { margin: 6, itemTemplate: itemTempl },
+            {margin: 6, itemTemplate: itemTempl},
             new go.Binding('itemArray', 'items')),
           $(go.TextBlock,
-            { font: 'bold 12pt sans-serif' },
+            {font: 'bold 12pt sans-serif'},
             new go.Binding('text'))
         )
       );
@@ -84,5 +86,57 @@ export class GOJS {
         copiesArrayObjects: true,
         nodeDataArray: nda
       });
+  }
+  public static createPieChart(id, slicess) {
+    const $ = go.GraphObject.make;
+    $(go.Diagram, id, {
+        nodeTemplate:
+          $(go.Node, 'Vertical',
+            $(go.Panel,
+              new go.Binding('itemArray', 'slices'),
+              {
+                itemTemplate:
+                  $(go.Panel,
+                    $(go.Shape,
+                      {fill: 'lightgreen', isGeometryPositioned: true},
+                      new go.Binding('fill', 'color'),
+                      new go.Binding('geometry', '', makeGeo)),
+                    {
+                      toolTip:
+                        $('ToolTip',
+                          $(go.TextBlock, {margin: 4},
+                            new go.Binding('text', '', (data) => {
+                              return data.type + ': ' + (data.sweep / 3.6).toFixed(2) + '%';
+                            }))
+                        )
+                    }
+                  )
+              }),
+            $(go.TextBlock,
+              new go.Binding('text'))
+          ),
+        model: $(go.Model,
+          {
+            nodeDataArray:
+              [  // node data
+                {
+                  key: 1,
+                  slices: slicess
+                }
+              ]
+          })
+      }
+    );
+
+    function makeGeo(data) {
+      // this is much more efficient than calling go.GraphObject.make:
+      return new go.Geometry()
+        .add(new go.PathFigure(200, 200)  // start point
+          .add(new go.PathSegment(go.PathSegment.Arc,
+            data.start, data.sweep,  // angles
+            200, 200,  // center
+            200, 200)  // radius
+            .close()));
+    }
   }
 }
