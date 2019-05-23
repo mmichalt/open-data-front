@@ -1,4 +1,5 @@
 import * as go from 'gojs';
+import {TranslateService} from '@ngx-translate/core';
 
 export enum Colors {
   '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
@@ -87,7 +88,7 @@ export class GOJS {
         nodeDataArray: nda
       });
   }
-  public static createPieChart(id, slicess) {
+  public static createPieChart(id, slicess, translate: TranslateService) {
     const $ = go.GraphObject.make;
     $(go.Diagram, id, {
         nodeTemplate:
@@ -106,7 +107,7 @@ export class GOJS {
                         $('ToolTip',
                           $(go.TextBlock, {margin: 4},
                             new go.Binding('text', '', (data) => {
-                              return data.type + ': ' + (data.sweep / 3.6).toFixed(2) + '%';
+                              return translate.instant('sfd.' + data.type) + ': ' + (data.sweep / 3.6).toFixed(2) + '%';
                             }))
                         )
                     }

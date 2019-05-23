@@ -23,7 +23,7 @@ export class SingleFinanceDataComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
-    GOJS.createPieChart('goDiagram', this.sfds.makeSlices());
+    GOJS.createPieChart('goDiagram', this.sfds.makeSlices(), this.translate);
   }
 
   ngAfterViewInit() {
