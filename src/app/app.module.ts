@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {MatTableModule, MatPaginatorModule, MatSortModule, MatMenuModule, MatToolbarModule, MatChipsModule} from '@angular/material';
@@ -12,11 +12,15 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {DateLocaleFilter} from './dateLocaleFilter';
 import { HistoricDataPageComponent } from './historicdatapage/historicdatapage.component';
+import { TableComponent } from './customComponents/table/table.component';
+import { SingleFinanceDataPowerbiComponent } from './single-finance-data-powerbi/single-finance-data-powerbi.component';
+import { ReportViewerModule } from 'ngx-ssrs-reportviewer';
 
 const appRoutes: Routes = [
   { path: 'periodic', component: PeriodicTableComponent },
   { path: 'sfd', component: SingleFinanceDataComponent },
   { path: 'hist', component: HistoricDataPageComponent },
+  { path: 'sfd-pb', component: SingleFinanceDataPowerbiComponent},
   { path: '', redirectTo: '/sfd', pathMatch: 'full' }
 ];
 
@@ -26,7 +30,9 @@ const appRoutes: Routes = [
     PeriodicTableComponent,
     SingleFinanceDataComponent,
     DateLocaleFilter,
-    HistoricDataPageComponent
+    HistoricDataPageComponent,
+    TableComponent,
+    SingleFinanceDataPowerbiComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +56,8 @@ const appRoutes: Routes = [
     })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
 

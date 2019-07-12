@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {FinanceData} from './FinanceData';
 import {BudgetSpending, BudgetSpendingType} from './BudgetSpending';
-import * as go from 'gojs';
 import {Colors} from '../utils';
 
 @Injectable({
@@ -11,8 +10,8 @@ export class SingleFinanceDataService {
   blobData: FinanceData;
   fillRandomData = (): BudgetSpending[] => {
     const arr = [];
-    for (let i = 0; i < 10; ++i) {
-      const money = Math.floor(Math.random() * Math.floor(1000000));
+    for (let i = 0; i < 10000; ++i) {
+      const money = Math.floor(Math.random() * Math.floor(2000) + 1);
       const type = Math.floor(Math.random() * Math.floor(9));
       const ddate = new Date();
       arr.push({
@@ -47,11 +46,9 @@ export class SingleFinanceDataService {
         color: Colors[BudgetSpendingType[spend.spendingType] * 3],
         type: spend.spendingType
       };
+      obj.sweep = Math.floor(360 / this.blobData.Overall * spend.sum);
       if (index) {
         obj.start = slices[index - 1].sweep + slices[index - 1].start;
-        obj.sweep = Math.floor(360 / this.blobData.Overall * spend.sum);
-      } else {
-        obj.sweep = Math.floor(360 / this.blobData.Overall * spend.sum);
       }
       slices.push(obj);
     });

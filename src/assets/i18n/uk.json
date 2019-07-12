@@ -1,10 +1,10 @@
 {
   "sfd": {
-    "No": "№",
-    "Type": "Тип",
-    "Money": "Сума",
-    "Description": "Опис",
-    "Date": "Дата",
+    "index": "№",
+    "spendingTypeText": "Тип",
+    "amountOfMoney": "Сума",
+    "description": "Опис",
+    "date": "Дата",
     "ART": "Мистецтво і культура",
     "EDUCATION":  "Освіта",
     "GOVERNANCE": "Управління",
